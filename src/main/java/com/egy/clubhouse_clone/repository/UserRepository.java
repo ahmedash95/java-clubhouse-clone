@@ -1,8 +1,8 @@
 package com.egy.clubhouse_clone.repository;
 
-import com.egy.clubhouse_clone.entity.UserEntity;
+import com.egy.clubhouse_clone.dao.UserDAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    UserEntity findByEmail(String email);
+public interface UserRepository extends JpaRepository<UserDAO, Long> {
+    UserDAO findByEmail(String email);
 }

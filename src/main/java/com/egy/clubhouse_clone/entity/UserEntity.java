@@ -1,26 +1,34 @@
 package com.egy.clubhouse_clone.entity;
 
-import javax.persistence.*;
+import com.egy.clubhouse_clone.dao.UserDAO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Entity
-@Table(name="users")
 public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    public int ID;
-    private String firstName;
-    private String lastName;
-    @Column(unique = true)
-    private String email;
-    private String password;
-    private boolean verified;
+    private Long id;
 
-    public int getID() {
-        return ID;
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -39,27 +47,13 @@ public class UserEntity {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
+    public UserEntity fromUserDao(UserDAO user) {
+        UserEntity self = new UserEntity();
+        self.setFirstName(user.getFirstName());
+        self.setLastName(user.getLastName());
+        self.setEmail(user.getEmail());
+        self.setId(user.getID());
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isVerified() {
-        return verified;
-    }
-
-    public void setVerified(boolean verified) {
-        this.verified = verified;
+        return self;
     }
 }
