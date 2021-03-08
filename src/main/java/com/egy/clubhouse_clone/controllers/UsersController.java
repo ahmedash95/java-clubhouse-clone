@@ -25,13 +25,7 @@ public class UsersController {
         user.setLastName((String) request.get("last_name"));
         user.setPassword((String) request.get("password"));
 
-        try {
-            userService.createUser(user);
-        } catch (Exception exception) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "The email already exists.");
-            return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+        userService.createUser(user);
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
