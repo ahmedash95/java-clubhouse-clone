@@ -43,4 +43,14 @@ public class UserService {
 
         return new UserEntity().fromUserDao(user.get());
     }
+
+    public UserEntity getByEmail(String email) {
+        Optional<UserDAO> user = userRepository.findByEmail(email);
+
+        if(user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        return new UserEntity().fromUserDao(user.get());
+    }
 }
