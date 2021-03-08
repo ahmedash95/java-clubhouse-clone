@@ -3,23 +3,22 @@ package com.egy.clubhouse_clone.exceptions.user;
 import com.egy.clubhouse_clone.exceptions.ApiException;
 import org.springframework.http.HttpStatus;
 
-public class EmailAlreadyTakenException extends ApiException {
+public class UserNotFoundException extends ApiException {
 
-    public EmailAlreadyTakenException() {
-
-    }
-
-    public EmailAlreadyTakenException(String message) {
+    public UserNotFoundException() {}
+    
+    public UserNotFoundException(String message) {
         super(message);
     }
 
     @Override
     public HttpStatus getStatusCode() {
-        return HttpStatus.UNPROCESSABLE_ENTITY;
+        return HttpStatus.NOT_FOUND;
     }
 
     @Override
     public String getMessage() {
-        return "The email is already taken!";
+        return "User is not found!";
     }
 }
+
