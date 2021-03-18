@@ -21,15 +21,17 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public UserEntity createUser(UserDAO user) throws ApiException {
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+    public UserEntity createUser(UserEntity user) throws ApiException {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException();
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        UserDAO dao = new UserDAO(user);
 
-        UserEntity userEntity = new UserEntity().fromUserDao(user);
+        dao.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(dao);
+
+        UserEntity userEntity = new UserEntity().fromUserDao(dao);
 
         return userEntity;
     }

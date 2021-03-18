@@ -10,6 +10,7 @@ import com.egy.clubhouse_clone.services.UserAuthenticationService;
 import com.egy.clubhouse_clone.services.UserService;
 import com.egy.clubhouse_clone.util.JWTUtil;
 import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,13 +55,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register/")
-    public ResponseEntity<Object> register(@RequestBody Map<String, Object> request) {
-        UserDAO user = new UserDAO();
-        user.setEmail((String) request.get("email"));
-        user.setFirstName((String) request.get("first_name"));
-        user.setLastName((String) request.get("last_name"));
-        user.setPassword((String) request.get("password"));
-
+    public ResponseEntity<Object> register(@Valid @RequestBody UserEntity user) {
         UserEntity userEntity = userService.createUser(user);
 
         return new ResponseEntity<>(userEntity, HttpStatus.CREATED);
