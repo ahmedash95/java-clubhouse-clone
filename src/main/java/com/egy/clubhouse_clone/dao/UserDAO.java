@@ -1,5 +1,6 @@
 package com.egy.clubhouse_clone.dao;
 
+import com.egy.clubhouse_clone.entity.ProfileEntity;
 import com.egy.clubhouse_clone.entity.UserEntity;
 import javax.persistence.*;
 
@@ -95,5 +96,11 @@ public class UserDAO {
         this.setEmail(user.getEmail());
         this.setBio(user.getBio());
         this.setPicture(user.getPicture());
+    }
+
+    public void fillFromProfile(ProfileEntity profileEntity) {
+        this.setFirstName(profileEntity.getFirstName());
+        this.setLastName(profileEntity.getLastName());
+        this.setBio(profileEntity.getBio());
     }
 }

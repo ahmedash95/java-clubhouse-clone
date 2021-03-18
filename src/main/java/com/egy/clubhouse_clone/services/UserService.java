@@ -1,6 +1,7 @@
 package com.egy.clubhouse_clone.services;
 
 import com.egy.clubhouse_clone.dao.UserDAO;
+import com.egy.clubhouse_clone.entity.ProfileEntity;
 import com.egy.clubhouse_clone.entity.UserEntity;
 import com.egy.clubhouse_clone.exceptions.ApiException;
 import com.egy.clubhouse_clone.exceptions.user.EmailAlreadyTakenException;
@@ -39,7 +40,7 @@ public class UserService {
     public UserEntity getById(Long userId) {
         Optional<UserDAO> user = userRepository.findById(userId);
 
-        if(user.isEmpty()) {
+        if (user.isEmpty()) {
             throw new UserNotFoundException();
         }
 
@@ -49,10 +50,24 @@ public class UserService {
     public UserEntity getByEmail(String email) {
         Optional<UserDAO> user = userRepository.findByEmail(email);
 
-        if(user.isEmpty()) {
+        if (user.isEmpty()) {
             throw new UserNotFoundException();
         }
 
         return new UserEntity().fromUserDao(user.get());
+    }
+
+    public UserEntity updateProfile(String userEmail, ProfileEntity profileEntity) {
+        Optional<UserDAO> user = userRepository.findByEmail(userEmail);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+        UserDAO dao = user.get();
+
+        dao.fillFromProfile(profileEntity);
+
+        userRepository.save(dao);
+
+        return new UserEntity().fromUserDao(dao);
     }
 }

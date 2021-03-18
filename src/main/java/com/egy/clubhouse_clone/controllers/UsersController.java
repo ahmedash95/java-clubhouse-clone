@@ -1,6 +1,7 @@
 package com.egy.clubhouse_clone.controllers;
 
 import com.egy.clubhouse_clone.dao.UserDAO;
+import com.egy.clubhouse_clone.entity.ProfileEntity;
 import com.egy.clubhouse_clone.entity.UserEntity;
 import com.egy.clubhouse_clone.services.UserService;
 import java.util.Map;
@@ -28,6 +29,13 @@ public class UsersController {
     @GetMapping("/profile/")
     public ResponseEntity<Object> profile(@AuthenticationPrincipal UserDetails user) {
         UserEntity userEntity = userService.getByEmail(user.getUsername());
+
+        return new ResponseEntity<>(userEntity, HttpStatus.OK);
+    }
+
+    @PostMapping("/profile/")
+    public ResponseEntity<Object> updateProfile(@AuthenticationPrincipal UserDetails user, @RequestBody ProfileEntity profileEntity) {
+        UserEntity userEntity = userService.updateProfile(user.getUsername(), profileEntity);
 
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }
