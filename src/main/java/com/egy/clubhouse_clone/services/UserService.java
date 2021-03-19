@@ -4,6 +4,7 @@ import com.egy.clubhouse_clone.dao.UserDAO;
 import com.egy.clubhouse_clone.entity.ProfileEntity;
 import com.egy.clubhouse_clone.entity.UserEntity;
 import com.egy.clubhouse_clone.exceptions.ApiException;
+import com.egy.clubhouse_clone.exceptions.user.UserCanNotFollowHimselfException;
 import com.egy.clubhouse_clone.exceptions.user.EmailAlreadyTakenException;
 import com.egy.clubhouse_clone.exceptions.user.UserNotFoundException;
 import com.egy.clubhouse_clone.repository.UserRepository;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -76,5 +78,28 @@ public class UserService {
         List<UserDAO> users = userRepository.search(query);
 
         return users.stream().map((dao) -> new UserEntity().fromUserDao(dao)).collect(Collectors.toList());
+    }
+
+    public void follow(UserDetails user, Long userId) {
+        Optional<UserDAO> dao = userRepository.findByEmail(user.getUsername());
+        if (dao.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        Optional<UserDAO> target = userRepository.findById(userId);
+        if (target.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        if(target.get().getID() == dao.get().getID()) {
+            throw new UserCanNotFollowHimselfException();
+        }
+
+        if(dao.get().getFollowing().stream().filter((f) -> f.getID().equals(userId)).toArray().length > 0) {
+            return;
+        }
+
+        dao.get().getFollowing().add(target.get());
+        userRepository.save(dao.get());
     }
 }

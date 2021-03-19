@@ -2,6 +2,7 @@ package com.egy.clubhouse_clone.dao;
 
 import com.egy.clubhouse_clone.entity.ProfileEntity;
 import com.egy.clubhouse_clone.entity.UserEntity;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -21,6 +22,9 @@ public class UserDAO {
     @Column(nullable = false)
     private String password;
     private boolean verified;
+
+    @ManyToMany()
+    private List<UserDAO> following;
 
     public Long getID() {
         return ID;
@@ -84,6 +88,14 @@ public class UserDAO {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public List<UserDAO> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<UserDAO> following) {
+        this.following = following;
     }
 
     public UserDAO() {

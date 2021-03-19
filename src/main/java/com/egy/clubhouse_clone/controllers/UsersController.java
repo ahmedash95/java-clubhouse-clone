@@ -1,11 +1,8 @@
 package com.egy.clubhouse_clone.controllers;
 
-import com.egy.clubhouse_clone.dao.UserDAO;
-import com.egy.clubhouse_clone.entity.ProfileEntity;
 import com.egy.clubhouse_clone.entity.UserEntity;
 import com.egy.clubhouse_clone.services.UserService;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +28,12 @@ public class UsersController {
     public ResponseEntity<Object> findUser(@RequestParam("query") String query) {
         List<UserEntity> users = userService.search(query);
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PostMapping("/follow/{id}")
+    public ResponseEntity<Object> follow(@PathVariable("id") Long userId, @AuthenticationPrincipal UserDetails user) {
+        userService.follow(user, userId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
