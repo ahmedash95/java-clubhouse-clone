@@ -23,8 +23,8 @@ public class UserDAO {
     private String password;
     private boolean verified;
 
-    @ManyToMany()
-    private List<UserDAO> following;
+    @OneToMany(mappedBy = "follower")
+    private List<Follower> follows;
 
     public Long getID() {
         return ID;
@@ -90,12 +90,12 @@ public class UserDAO {
         this.verified = verified;
     }
 
-    public List<UserDAO> getFollowing() {
-        return following;
+    public List<Follower> getFollowing() {
+        return follows;
     }
 
-    public void setFollowing(List<UserDAO> following) {
-        this.following = following;
+    public void setFollowing(List<Follower> follows) {
+        this.follows = follows;
     }
 
     public UserDAO() {
