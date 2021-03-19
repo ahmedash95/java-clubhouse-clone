@@ -4,6 +4,7 @@ import com.egy.clubhouse_clone.dao.UserDAO;
 import com.egy.clubhouse_clone.entity.ProfileEntity;
 import com.egy.clubhouse_clone.entity.UserEntity;
 import com.egy.clubhouse_clone.services.UserService;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,17 +27,9 @@ public class UsersController {
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }
 
-    @GetMapping("/profile/")
-    public ResponseEntity<Object> profile(@AuthenticationPrincipal UserDetails user) {
-        UserEntity userEntity = userService.getByEmail(user.getUsername());
-
-        return new ResponseEntity<>(userEntity, HttpStatus.OK);
-    }
-
-    @PostMapping("/profile/")
-    public ResponseEntity<Object> updateProfile(@AuthenticationPrincipal UserDetails user, @RequestBody ProfileEntity profileEntity) {
-        UserEntity userEntity = userService.updateProfile(user.getUsername(), profileEntity);
-
-        return new ResponseEntity<>(userEntity, HttpStatus.OK);
+    @GetMapping("/find")
+    public ResponseEntity<Object> findUser(@RequestParam("query") String query) {
+        List<UserEntity> users = userService.search(query);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

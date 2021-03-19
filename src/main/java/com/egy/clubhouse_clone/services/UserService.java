@@ -7,9 +7,10 @@ import com.egy.clubhouse_clone.exceptions.ApiException;
 import com.egy.clubhouse_clone.exceptions.user.EmailAlreadyTakenException;
 import com.egy.clubhouse_clone.exceptions.user.UserNotFoundException;
 import com.egy.clubhouse_clone.repository.UserRepository;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -69,5 +70,11 @@ public class UserService {
         userRepository.save(dao);
 
         return new UserEntity().fromUserDao(dao);
+    }
+
+    public List<UserEntity> search(String query) {
+        List<UserDAO> users = userRepository.search(query);
+
+        return users.stream().map((dao) -> new UserEntity().fromUserDao(dao)).collect(Collectors.toList());
     }
 }
