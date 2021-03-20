@@ -12,7 +12,7 @@ public class UserEntity extends ProfileEntity {
     @Email(message = "Email must be valid.")
     private String email;
 
-    @JsonProperty(value = "password", access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "password")
     @Min(value = 6, message = "Password should be at least 6 characters.")
     private String password;
 
