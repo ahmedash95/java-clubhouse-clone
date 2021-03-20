@@ -1,16 +1,13 @@
 package com.egy.clubhouse_clone.services;
 
-import com.egy.clubhouse_clone.dao.Follower;
 import com.egy.clubhouse_clone.dao.UserDAO;
 import com.egy.clubhouse_clone.entity.ProfileEntity;
 import com.egy.clubhouse_clone.entity.UserEntity;
 import com.egy.clubhouse_clone.exceptions.ApiException;
-import com.egy.clubhouse_clone.exceptions.user.UserCanNotFollowHimselfException;
 import com.egy.clubhouse_clone.exceptions.user.EmailAlreadyTakenException;
 import com.egy.clubhouse_clone.exceptions.user.UserNotFoundException;
 import com.egy.clubhouse_clone.repository.FollowingRepository;
 import com.egy.clubhouse_clone.repository.UserRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
