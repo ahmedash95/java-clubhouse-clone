@@ -60,7 +60,7 @@ public class UsersControllerTest extends ClubhouseCloneApplicationTests {
     }
 
     @Test
-    public void test_user_can_register_with_taken_email() throws Exception {
+    public void test_user_can_not_register_with_taken_email() throws Exception {
         UserEntity user = UserHelper.getUserEntity();
         userService.createUser(user);
 
