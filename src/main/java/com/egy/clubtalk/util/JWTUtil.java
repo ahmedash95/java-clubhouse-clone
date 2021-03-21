@@ -14,7 +14,7 @@ import java.util.function.Function;
 @Service
 public class JWTUtil {
 
-    private String SECRET_KEY = "clubhouseSecretKeyToKeepTheApplicationSecureFromAttackersWhichIsNot100PercentTrue";
+    private String SECRET_KEY = "ClubTalkSecretKeyToKeepTheApplicationSecureFromAttackersWhichIsNot100PercentTrue";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

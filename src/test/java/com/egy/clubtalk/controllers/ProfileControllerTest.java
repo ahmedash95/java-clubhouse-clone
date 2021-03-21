@@ -4,7 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.egy.clubtalk.ClubhouseCloneApplicationTests;
+import com.egy.clubtalk.ClubTalkApplicationTest;
 import com.egy.clubtalk.entity.UserEntity;
 import com.egy.clubtalk.helper.UserHelper;
 import com.egy.clubtalk.services.UserService;
@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class ProfileControllerTest extends ClubhouseCloneApplicationTests {
+public class ProfileControllerTest extends ClubTalkApplicationTest {
     @Autowired
     private MockMvc mockMvc;
 

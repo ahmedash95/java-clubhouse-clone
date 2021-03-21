@@ -3,7 +3,7 @@ package com.egy.clubtalk.controllers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.egy.clubtalk.ClubhouseCloneApplicationTests;
+import com.egy.clubtalk.ClubTalkApplicationTest;
 import com.egy.clubtalk.entity.UserEntity;
 import com.egy.clubtalk.exceptions.user.EmailAlreadyTakenException;
 import com.egy.clubtalk.helper.UserHelper;
@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class UsersControllerTest extends ClubhouseCloneApplicationTests {
+public class UsersControllerTest extends ClubTalkApplicationTest {
 
     @Autowired
     private MockMvc mockMvc;
