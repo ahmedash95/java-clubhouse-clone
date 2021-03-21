@@ -25,11 +25,11 @@ public class UserDAO {
     private boolean verified;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_follower", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "follower_id"))
-    private List<UserDAO> followers;
-
-    @ManyToMany(mappedBy = "followers")
+    @JoinTable(name = "user_following", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "following_id"))
     private List<UserDAO> following;
+
+    @ManyToMany(mappedBy = "following")
+    private List<UserDAO> followers;
 
     public Long getID() {
         return ID;

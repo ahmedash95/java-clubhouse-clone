@@ -14,8 +14,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -79,7 +81,6 @@ public class UserService {
         return users.stream().map((dao) -> new UserEntity().fromUserDao(dao)).collect(Collectors.toList());
     }
 
-
     public void follow(String from, Long to) {
         Optional<UserDAO> user = userRepository.findByEmail(from);
         if (user.isEmpty()) {
@@ -95,7 +96,8 @@ public class UserService {
             throw new UserCanNotFollowHimselfException();
         }
 
-        if(user.get().getFollowing().stream().filter((f) -> f.getID().equals(toFollow.get().getID())).toArray().length > 0) {
+        List<UserDAO> followings = user.get().getFollowing();
+        if(followings.stream().filter((f) -> f.getID().equals(toFollow.get().getID())).toArray().length > 0) {
             return;
         }
 
