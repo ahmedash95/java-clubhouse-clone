@@ -5,8 +5,8 @@ import com.egy.clubtalk.entity.ProfileEntity;
 import com.egy.clubtalk.entity.UserEntity;
 import com.egy.clubtalk.exceptions.ApiException;
 import com.egy.clubtalk.exceptions.user.EmailAlreadyTakenException;
+import com.egy.clubtalk.exceptions.user.UserCanNotFollowHimselfException;
 import com.egy.clubtalk.exceptions.user.UserNotFoundException;
-import com.egy.clubtalk.repository.FollowingRepository;
 import com.egy.clubtalk.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +20,6 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    FollowingRepository followingRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -80,5 +77,48 @@ public class UserService {
         List<UserDAO> users = userRepository.search(query);
 
         return users.stream().map((dao) -> new UserEntity().fromUserDao(dao)).collect(Collectors.toList());
+    }
+
+
+    public void follow(String from, Long to) {
+        Optional<UserDAO> user = userRepository.findByEmail(from);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        Optional<UserDAO> toFollow = userRepository.findById(to);
+        if (toFollow.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        if(user.get().getID().equals(toFollow.get().getID())) {
+            throw new UserCanNotFollowHimselfException();
+        }
+
+        if(user.get().getFollowing().stream().filter((f) -> f.getID().equals(toFollow.get().getID())).toArray().length > 0) {
+            return;
+        }
+
+        user.get().getFollowing().add(toFollow.get());
+
+        userRepository.save(user.get());
+    }
+
+    public List<UserEntity> getFollowersByUserId(Long userId) {
+        Optional<UserDAO> user = userRepository.findById(userId);
+        if(user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        return user.get().getFollowers().stream().map((u) -> new UserEntity().fromUserDao(u)).collect(Collectors.toList());
+    }
+
+    public List<UserEntity> getFolloweeByUserId(Long userId) {
+        Optional<UserDAO> user = userRepository.findById(userId);
+        if(user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        return user.get().getFollowing().stream().map((u) -> new UserEntity().fromUserDao(u)).collect(Collectors.toList());
     }
 }

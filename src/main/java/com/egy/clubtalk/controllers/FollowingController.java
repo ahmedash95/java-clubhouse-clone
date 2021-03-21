@@ -1,6 +1,6 @@
 package com.egy.clubtalk.controllers;
 
-import com.egy.clubtalk.services.FollowingService;
+import com.egy.clubtalk.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class FollowingController {
 
     @Autowired
-    FollowingService followingService;
+    UserService userService;
 
     @PostMapping("/{id}")
     public ResponseEntity<Object> followUser(@AuthenticationPrincipal UserDetails auth, @PathVariable("id") Long userId) {
-        followingService.follow(auth.getUsername(), userId);
+        userService.follow(auth.getUsername(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
