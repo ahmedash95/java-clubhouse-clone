@@ -3,6 +3,7 @@ package com.egy.clubtalk.dao;
 import com.egy.clubtalk.entity.ProfileEntity;
 import com.egy.clubtalk.entity.UserEntity;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -23,8 +24,12 @@ public class UserDAO {
     private String password;
     private boolean verified;
 
-    @OneToMany(mappedBy = "follower")
-    private List<Follower> follows;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_follower", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    private List<UserDAO> followers;
+
+    @ManyToMany(mappedBy = "followers")
+    private List<UserDAO> following;
 
     public Long getID() {
         return ID;
@@ -90,12 +95,20 @@ public class UserDAO {
         this.verified = verified;
     }
 
-    public List<Follower> getFollowing() {
-        return follows;
+    public List<UserDAO> getFollowers() {
+        return followers;
     }
 
-    public void setFollowing(List<Follower> follows) {
-        this.follows = follows;
+    public void setFollowers(List<UserDAO> followers) {
+        this.followers = followers;
+    }
+
+    public List<UserDAO> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<UserDAO> following) {
+        this.following = following;
     }
 
     public UserDAO() {
