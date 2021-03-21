@@ -11,4 +11,10 @@ public class UserHelper {
         user.setPassword("123456");
         return user;
     }
+
+    public static UserEntity getUserEntity(String email) {
+        UserEntity u = getUserEntity();
+        u.setEmail(email);
+        return u;
+    }
 }
