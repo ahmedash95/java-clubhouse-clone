@@ -2,8 +2,8 @@ package com.egy.clubtalk.dao;
 
 import com.egy.clubtalk.entity.ProfileEntity;
 import com.egy.clubtalk.entity.UserEntity;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -30,6 +30,14 @@ public class UserDAO {
 
     @ManyToMany(mappedBy = "following")
     private List<UserDAO> followers;
+
+    @OneToMany(
+        mappedBy = "owner",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.LAZY
+    )
+    private List<RoomDAO> rooms;
 
     public Long getID() {
         return ID;
@@ -109,6 +117,14 @@ public class UserDAO {
 
     public void setFollowing(List<UserDAO> following) {
         this.following = following;
+    }
+
+    public List<RoomDAO> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<RoomDAO> rooms) {
+        this.rooms = rooms;
     }
 
     public UserDAO() {
