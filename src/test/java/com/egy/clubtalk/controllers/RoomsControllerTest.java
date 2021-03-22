@@ -40,10 +40,6 @@ public class RoomsControllerTest {
     private UserService userService;
 
     @Autowired
-    private UserRepository userRepository;
-
-
-    @Autowired
     private JacksonTester<RoomEntity> json;
 
     @Test
