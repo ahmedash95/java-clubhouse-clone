@@ -25,11 +25,24 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     private JWTFilter jwtRequestFilter;
 
+    private final String[] WHITE_LIST = new String[]{
+            "/",
+            "/login/",
+            "/register/",
+            "/swagger-ui.html",
+            "/swagger-ui.html/**",
+            "/webjars/**",
+            "/swagger-resource/**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**",
+            "/csrf"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login/", "/register/").permitAll()
+                .antMatchers(WHITE_LIST).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
