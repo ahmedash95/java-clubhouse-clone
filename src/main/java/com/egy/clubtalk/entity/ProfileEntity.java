@@ -18,7 +18,7 @@ public class ProfileEntity {
     private String lastName;
 
     @JsonProperty("bio")
-    @Max(255)
+    @Size(min = 3, max = 255)
     private String bio;
 
     @JsonProperty("picture")
