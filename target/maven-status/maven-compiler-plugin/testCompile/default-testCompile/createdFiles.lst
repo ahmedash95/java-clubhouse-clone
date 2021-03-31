@@ -1,0 +1,5 @@
+com/egy/clubtalk/controllers/RoomsControllerTest.class
+com/egy/clubtalk/controllers/UsersControllerTest.class
+com/egy/clubtalk/ClubTalkApplicationTest.class
+com/egy/clubtalk/controllers/ProfileControllerTest.class
+com/egy/clubtalk/helper/UserHelper.class
