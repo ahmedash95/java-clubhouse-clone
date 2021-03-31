@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Rule;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,14 +71,17 @@ public class UsersControllerTest extends ClubTalkApplicationTest {
         UserEntity user = UserHelper.getUserEntity();
         userService.createUser(user);
 
-        exception.expect(EmailAlreadyTakenException.class);
-        mockMvc.perform(
+        ResultActions resultActions = mockMvc.perform(
                 post(new URI("/register/"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json.write(user).getJson())
         ).andExpect(status().isUnprocessableEntity());
 
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Assert.assertTrue(contentAsString.contains("The email is already taken!"));
         Assert.assertEquals(1, userRepository.findAll().size());
     }
 

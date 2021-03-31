@@ -10,7 +10,7 @@ import com.egy.clubtalk.helper.UserHelper;
 import com.egy.clubtalk.services.UserService;
 import java.net.URI;
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
