@@ -9,6 +9,8 @@ import com.egy.clubtalk.services.UserAuthenticationService;
 import com.egy.clubtalk.services.UserService;
 import com.egy.clubtalk.util.JWTUtil;
 import javax.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,8 @@ public class AuthenticationController {
     @Autowired
     UserService userService;
 
+    Logger logger = LogManager.getLogger(AuthenticationController.class);
+
     @PostMapping("/login/")
     public ResponseEntity<Object> login(@RequestBody AuthenticationRequest request) throws ApiException {
         try {
@@ -53,6 +57,8 @@ public class AuthenticationController {
     @PostMapping("/register/")
     public ResponseEntity<Object> register(@Valid @RequestBody UserEntity user) {
         UserEntity userEntity = userService.createUser(user);
+
+        logger.info("New user registered!");
 
         return new ResponseEntity<>(userEntity, HttpStatus.CREATED);
     }
