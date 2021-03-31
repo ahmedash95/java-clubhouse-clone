@@ -17,7 +17,7 @@
                     10 MegaBytes -->
                 <OnStartupTriggeringPolicy />
                 <SizeBasedTriggeringPolicy
-                        size="10 MB" />
+                        size="500 MB" />
                 <TimeBasedTriggeringPolicy />
             </Policies>
         </RollingFile>

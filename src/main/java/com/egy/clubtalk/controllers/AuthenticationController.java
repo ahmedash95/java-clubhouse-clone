@@ -58,7 +58,7 @@ public class AuthenticationController {
     public ResponseEntity<Object> register(@Valid @RequestBody UserEntity user) {
         UserEntity userEntity = userService.createUser(user);
 
-        logger.info("New user registered!");
+        logger.info("New user has been created!");
 
         return new ResponseEntity<>(userEntity, HttpStatus.CREATED);
     }

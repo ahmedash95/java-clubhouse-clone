@@ -1,9 +1,12 @@
 package com.egy.clubtalk;
 
+import com.egy.clubtalk.controllers.AuthenticationController;
 import com.egy.clubtalk.exceptions.ApiException;
 import com.egy.clubtalk.util.StringUtil;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +20,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+    Logger logger = LogManager.getLogger(AuthenticationController.class);
+
     @ExceptionHandler({ ApiException.class })
     public ResponseEntity<Object> handleApiExceptions(ApiException ex, WebRequest request) {
         Map<String, Object> body = new HashMap<>();
         body.put("success", false);
         body.put("message", ex.getMessage());
+
+        logger.error("API Exception: " + ex.getMessage());
 
         return new ResponseEntity<>(body, ex.getStatusCode());
     }
