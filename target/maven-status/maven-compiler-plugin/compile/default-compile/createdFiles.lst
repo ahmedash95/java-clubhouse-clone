@@ -19,6 +19,7 @@ com/egy/clubtalk/util/StringUtil.class
 com/egy/clubtalk/entity/UserEntity.class
 com/egy/clubtalk/exceptions/user/UserNotFoundException.class
 com/egy/clubtalk/exceptions/ApiExceptionInterface.class
+com/egy/clubtalk/SwaggerAPIConfiguration.class
 com/egy/clubtalk/ApplicationSecurity.class
 com/egy/clubtalk/controllers/RoomsController.class
 com/egy/clubtalk/util/JWTUtil.class
@@ -28,4 +29,5 @@ com/egy/clubtalk/repository/RoomRepository.class
 com/egy/clubtalk/exceptions/rooms/RoomOwnerIsInvalidException.class
 com/egy/clubtalk/exceptions/user/EmailAlreadyTakenException.class
 com/egy/clubtalk/services/UserAuthenticationService.class
+com/egy/clubtalk/SwaggerAPIConfiguration$1.class
 com/egy/clubtalk/controllers/ProfileController.class

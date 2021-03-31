@@ -2,6 +2,7 @@
 /Users/ahmed.ashraf/ash-projects/clubtalk/src/main/java/com/egy/clubtalk/exceptions/user/UserNotFoundException.java
 /Users/ahmed.ashraf/ash-projects/clubtalk/src/main/java/com/egy/clubtalk/exceptions/authentication/InvalidCredentialsException.java
 /Users/ahmed.ashraf/ash-projects/clubtalk/src/main/java/com/egy/clubtalk/controllers/AuthenticationController.java
+/Users/ahmed.ashraf/ash-projects/clubtalk/src/main/java/com/egy/clubtalk/SwaggerAPIConfiguration.java
 /Users/ahmed.ashraf/ash-projects/clubtalk/src/main/java/com/egy/clubtalk/exceptions/rooms/RoomOwnerIsInvalidException.java
 /Users/ahmed.ashraf/ash-projects/clubtalk/src/main/java/com/egy/clubtalk/controllers/HomeController.java
 /Users/ahmed.ashraf/ash-projects/clubtalk/src/main/java/com/egy/clubtalk/filters/JWTFilter.java
