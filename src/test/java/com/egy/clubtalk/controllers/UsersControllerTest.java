@@ -114,6 +114,20 @@ public class UsersControllerTest extends ClubTalkApplicationTest {
         ).andExpect(status().isBadRequest());
     }
 
+    @Test
+    @WithMockUser(username = "ahmed@email.com", password = "pwd", roles = "USER")
+    public void test_user_can_be_followed_once() throws Exception {
+        // create logged in user
+        userService.createUser(UserHelper.getUserEntity());
+        UserEntity user = userService.createUser(UserHelper.getUserEntity("user2@email.com"));
+        userService.follow("ahmed@email.com", user.getId());
+
+        mockMvc.perform(post(String.format("/users/follow/%d", user.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isBadRequest());
+    }
+
 
     @Test
     @WithMockUser(username = "ahmed@email.com", password = "pwd", roles = "USER")
