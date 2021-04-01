@@ -5,6 +5,7 @@ import com.egy.clubtalk.dao.RoomDAO;
 import com.egy.clubtalk.dao.UserDAO;
 import com.egy.clubtalk.entity.RoomEntity;
 import com.egy.clubtalk.entity.RoomInvitation;
+import com.egy.clubtalk.entity.UserEntity;
 import com.egy.clubtalk.exceptions.rooms.RoomNotFoundException;
 import com.egy.clubtalk.exceptions.rooms.RoomOwnerIsInvalidException;
 import com.egy.clubtalk.exceptions.rooms.UserAlreadyInvitedToRoomException;
@@ -13,7 +14,6 @@ import com.egy.clubtalk.repository.RoomRepository;
 import com.egy.clubtalk.repository.UserRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,12 +43,7 @@ public class RoomsService {
         return new RoomEntity().fromDAO(dao);
     }
 
-    public void inviteToRoom(Long roomId, UserDetails user, RoomInvitation invitation) {
-        Optional<UserDAO> sender = userRepository.findByEmail(user.getUsername());
-        if (sender.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-
+    public void inviteToRoom(Long roomId, UserEntity sender, RoomInvitation invitation) {
         Optional<UserDAO> receiver = userRepository.findById(invitation.getUserId());
         if (receiver.isEmpty()) {
             throw new UserNotFoundException();
@@ -59,10 +54,21 @@ public class RoomsService {
             throw new RoomNotFoundException();
         }
 
-        if(room.get().getAudience().stream().filter((RoomAudience u) -> u.getUser().getID() == receiver.get().getID()).toArray().length > 0) {
+        if (room.get().getAudience().stream().filter((RoomAudience u) -> u.getUser().getID() == receiver.get().getID()).toArray().length > 0) {
             throw new UserAlreadyInvitedToRoomException();
         }
 
-        room.get().getAudience().add(new RoomAudience(receiver.get(), sender.get(), room.get()));
+        UserDAO senderDAO = userRepository.findById(sender.getId()).get();
+
+        room.get().getAudience().add(new RoomAudience(receiver.get(), senderDAO, room.get()));
+    }
+
+    public RoomEntity find(Long id) {
+        Optional<RoomDAO> room = roomRepository.findById(id);
+        if (room.isEmpty()) {
+            throw new RoomNotFoundException();
+        }
+
+        return new RoomEntity().fromDAO(room.get());
     }
 }

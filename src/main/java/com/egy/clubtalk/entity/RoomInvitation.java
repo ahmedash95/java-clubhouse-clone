@@ -13,4 +13,11 @@ public class RoomInvitation {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    public RoomInvitation() {
+    }
+
+    public RoomInvitation(Long userId) {
+        this.userId = userId;
+    }
 }

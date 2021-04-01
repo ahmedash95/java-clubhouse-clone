@@ -2,6 +2,7 @@ package com.egy.clubtalk.controllers;
 
 import com.egy.clubtalk.entity.RoomEntity;
 import com.egy.clubtalk.entity.RoomInvitation;
+import com.egy.clubtalk.entity.UserEntity;
 import com.egy.clubtalk.services.RoomsService;
 import com.egy.clubtalk.services.UserService;
 import java.util.HashMap;
@@ -33,11 +34,12 @@ public class RoomsController {
 
     @PostMapping("/{id}/invite")
     public  ResponseEntity<Object> inviteToRoom(@PathVariable("id") Long roomId, @Validated @RequestBody RoomInvitation invitation, @AuthenticationPrincipal UserDetails user) {
-        roomService.inviteToRoom(roomId, user, invitation);
+        UserEntity sender = userService.getByEmail(user.getUsername());
+        roomService.inviteToRoom(roomId, sender, invitation);
 
         HashMap<String, Object> response = new HashMap<>();
         response.put("success", true);
-        response.put("message", "User has been invited to room");
+        response.put("message", "User has been invited to room.");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
