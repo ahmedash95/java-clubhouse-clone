@@ -54,13 +54,14 @@ public class RoomsService {
             throw new RoomNotFoundException();
         }
 
-        if (room.get().getAudience().stream().filter((RoomAudience u) -> u.getUser().getID() == receiver.get().getID()).toArray().length > 0) {
+        UserDAO senderDAO = userRepository.findById(sender.getId()).get();
+        RoomAudience record = new RoomAudience(receiver.get(), senderDAO, room.get());
+
+        if (room.get().getAudience().contains(record)) {
             throw new UserAlreadyInvitedToRoomException();
         }
 
-        UserDAO senderDAO = userRepository.findById(sender.getId()).get();
-
-        room.get().getAudience().add(new RoomAudience(receiver.get(), senderDAO, room.get()));
+        room.get().getAudience().add(record);
     }
 
     public RoomEntity find(Long id) {

@@ -1,7 +1,7 @@
 package com.egy.clubtalk.dao;
 
 import com.egy.clubtalk.entity.RoomEntity;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -19,10 +19,10 @@ public class RoomDAO {
 
     @OneToMany
     @JoinTable(name = "room_managers", joinColumns = @JoinColumn(name = "room_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    public List<UserDAO> managers;
+    public Set<UserDAO> managers;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    public List<RoomAudience> audience;
+    public Set<RoomAudience> audience;
 
     public Long getID() {
         return ID;
@@ -48,19 +48,19 @@ public class RoomDAO {
         this.owner = owner;
     }
 
-    public List<UserDAO> getManagers() {
+    public Set<UserDAO> getManagers() {
         return managers;
     }
 
-    public void setManagers(List<UserDAO> managers) {
+    public void setManagers(Set<UserDAO> managers) {
         this.managers = managers;
     }
 
-    public List<RoomAudience> getAudience() {
+    public Set<RoomAudience> getAudience() {
         return audience;
     }
 
-    public void setAudience(List<RoomAudience> audience) {
+    public void setAudience(Set<RoomAudience> audience) {
         this.audience = audience;
     }
 

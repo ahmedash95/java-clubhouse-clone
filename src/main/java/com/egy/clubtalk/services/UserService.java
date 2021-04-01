@@ -5,11 +5,13 @@ import com.egy.clubtalk.entity.ProfileEntity;
 import com.egy.clubtalk.entity.UserEntity;
 import com.egy.clubtalk.exceptions.ApiException;
 import com.egy.clubtalk.exceptions.user.EmailAlreadyTakenException;
+import com.egy.clubtalk.exceptions.user.UserAlreadyFollowedException;
 import com.egy.clubtalk.exceptions.user.UserCanNotFollowHimselfException;
 import com.egy.clubtalk.exceptions.user.UserNotFoundException;
 import com.egy.clubtalk.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -96,9 +98,9 @@ public class UserService {
             throw new UserCanNotFollowHimselfException();
         }
 
-        List<UserDAO> followings = user.get().getFollowing();
-        if(followings.stream().filter((f) -> f.getID().equals(toFollow.get().getID())).toArray().length > 0) {
-            return;
+        Set<UserDAO> followings = user.get().getFollowing();
+        if(followings.contains(toFollow.get())) {
+            throw new UserAlreadyFollowedException();
         }
 
         user.get().getFollowing().add(toFollow.get());

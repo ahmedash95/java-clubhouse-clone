@@ -1,5 +1,6 @@
 package com.egy.clubtalk.dao;
 
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
@@ -59,5 +60,15 @@ public class RoomAudience {
 
     public void setRoom(RoomDAO room) {
         this.room = room;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user.getID(), room.getID());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }
