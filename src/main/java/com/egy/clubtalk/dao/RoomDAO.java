@@ -21,6 +21,9 @@ public class RoomDAO {
     @JoinTable(name = "room_managers", joinColumns = @JoinColumn(name = "room_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     public List<UserDAO> managers;
 
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    public List<RoomAudience> audience;
+
     public Long getID() {
         return ID;
     }
@@ -53,6 +56,14 @@ public class RoomDAO {
         this.managers = managers;
     }
 
+    public List<RoomAudience> getAudience() {
+        return audience;
+    }
+
+    public void setAudience(List<RoomAudience> audience) {
+        this.audience = audience;
+    }
+
     public RoomDAO fromEntity(RoomEntity room, UserDAO owner) {
         RoomDAO dao = new RoomDAO();
         dao.setName(room.getName());
@@ -60,4 +71,5 @@ public class RoomDAO {
 
         return dao;
     }
+
 }
