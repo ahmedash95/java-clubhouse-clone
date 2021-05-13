@@ -9,12 +9,12 @@ import javax.validation.constraints.Size;
 public class ProfileEntity {
     @JsonProperty("first_name")
     @NotBlank(message = "First name is required.")
-    @Size(min = 3, max = 15)
+    @Size(min = 3, max = 15, message = "First name must be at least 3 chars and 15 max.")
     private String firstName;
 
     @JsonProperty("last_name")
     @NotBlank(message = "Last name is required.")
-    @Size(min = 3, max = 15)
+    @Size(min = 3, max = 15, message = "Last name must be at least 3 chars and 15 max.")
     private String lastName;
 
     @JsonProperty("bio")

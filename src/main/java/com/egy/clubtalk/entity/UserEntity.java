@@ -7,6 +7,9 @@ import javax.validation.constraints.*;
 public class UserEntity extends ProfileEntity {
     private Long id;
 
+    @JsonProperty(value = "username")
+    @NotNull(message = "Username must be entered")
+    @Size(min = 3, max = 15, message = "Username should be at least 3 characters.")
     private String username;
 
     @JsonProperty("email")
@@ -14,7 +17,7 @@ public class UserEntity extends ProfileEntity {
     private String email;
 
     @JsonProperty(value = "password")
-    @Min(value = 6, message = "Password should be at least 6 characters.")
+    @Size(min = 6, max = 15, message = "Password should be at least 6 characters.")
     private String password;
 
     public Long getId() {

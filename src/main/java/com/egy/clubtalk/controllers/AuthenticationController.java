@@ -37,7 +37,7 @@ public class AuthenticationController {
     Logger logger = LogManager.getLogger(AuthenticationController.class);
 
     @PostMapping("/login/")
-    public ResponseEntity<Object> login(@RequestBody AuthenticationRequest request) throws ApiException {
+    public ResponseEntity<Object> login(@Valid @RequestBody AuthenticationRequest request) throws ApiException {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())

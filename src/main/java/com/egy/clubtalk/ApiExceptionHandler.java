@@ -2,6 +2,7 @@ package com.egy.clubtalk;
 
 import com.egy.clubtalk.controllers.AuthenticationController;
 import com.egy.clubtalk.exceptions.ApiException;
+import com.egy.clubtalk.exceptions.ApiValidationException;
 import com.egy.clubtalk.util.StringUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         body.put("message", ex.getMessage());
 
         logger.error("API Exception: " + ex.getMessage());
+
+        return new ResponseEntity<>(body, ex.getStatusCode());
+    }
+
+    @ExceptionHandler({ ApiValidationException.class })
+    public ResponseEntity<Object> handleApiValidationExceptions(ApiValidationException ex, WebRequest request) {
+        Map<String, Object> errors = new HashMap<>();
+        errors.put(ex.getFieldName(), ex.getMessage());
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("success", false);
+        body.put("errors", errors);
+
+        logger.error("API Exception - Validation: " + ex.getMessage());
 
         return new ResponseEntity<>(body, ex.getStatusCode());
     }

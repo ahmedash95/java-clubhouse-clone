@@ -19,7 +19,7 @@ public class UserAuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<UserDAO> user = userRepository.findByEmail(email);
+        Optional<UserDAO> user = userRepository.findByEmailOrUserName(email);
         UserDetails userDetails = new User(user.get().getEmail(), user.get().getPassword(), new ArrayList<>());
 
         return userDetails;
