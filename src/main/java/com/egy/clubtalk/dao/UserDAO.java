@@ -13,6 +13,8 @@ public class UserDAO {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long ID;
     @Column(nullable = false)
+    private String username;
+    @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
     private String lastName;
@@ -45,6 +47,14 @@ public class UserDAO {
 
     public void setID(Long ID) {
         this.ID = ID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -132,6 +142,7 @@ public class UserDAO {
 
     public UserDAO(UserEntity user) {
         this.setID(user.getId());
+        this.setUsername(user.getUsername());
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
         this.setEmail(user.getEmail());

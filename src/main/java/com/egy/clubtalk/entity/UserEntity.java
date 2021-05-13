@@ -7,6 +7,8 @@ import javax.validation.constraints.*;
 public class UserEntity extends ProfileEntity {
     private Long id;
 
+    private String username;
+
     @JsonProperty("email")
     @Email(message = "Email must be valid.")
     private String email;
@@ -21,6 +23,14 @@ public class UserEntity extends ProfileEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -41,6 +51,7 @@ public class UserEntity extends ProfileEntity {
 
     public UserEntity fromUserDao(UserDAO user) {
         UserEntity self = new UserEntity();
+        self.setUsername(user.getUsername());
         self.setFirstName(user.getFirstName());
         self.setLastName(user.getLastName());
         self.setEmail(user.getEmail());
