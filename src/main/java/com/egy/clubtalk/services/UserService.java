@@ -63,6 +63,16 @@ public class UserService {
         return new UserEntity().fromUserDao(user.get());
     }
 
+    public UserEntity getByEmailOrUserName(String email) {
+        Optional<UserDAO> user = userRepository.findByEmailOrUserName(email);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        return new UserEntity().fromUserDao(user.get());
+    }
+
     public UserEntity updateProfile(String userEmail, ProfileEntity profileEntity) {
         Optional<UserDAO> user = userRepository.findByEmail(userEmail);
         if (user.isEmpty()) {

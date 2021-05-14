@@ -6,6 +6,7 @@ import com.egy.clubtalk.entity.UserEntity;
 import com.egy.clubtalk.services.RoomsService;
 import com.egy.clubtalk.services.UserService;
 import java.util.HashMap;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +25,28 @@ public class RoomsController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/")
+    public ResponseEntity<Object> getRooms(@AuthenticationPrincipal UserDetails user) {
+        UserEntity owner = userService.getByEmail(user.getUsername());
+        List<RoomEntity> rooms = roomService.getRoomsByOwner(owner);
+
+        return new ResponseEntity<>(rooms, HttpStatus.CREATED);
+    }
+
     @PostMapping("/")
     public ResponseEntity<Object> createRoom(@Validated @RequestBody RoomEntity room, @AuthenticationPrincipal UserDetails user) {
         room.setOwner(userService.getByEmail(user.getUsername()));
-        roomService.createRoom(room);
+        RoomEntity roomEntity = roomService.createRoom(room);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(roomEntity, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> showRoom(@PathVariable("id") Long roomId) {
+        RoomEntity room = roomService.find(roomId);
+
+        return new ResponseEntity<>(room, HttpStatus.CREATED);
+    }
     @PostMapping("/{id}/invite")
     public  ResponseEntity<Object> inviteToRoom(@PathVariable("id") Long roomId, @Validated @RequestBody RoomInvitation invitation, @AuthenticationPrincipal UserDetails user) {
         UserEntity sender = userService.getByEmail(user.getUsername());

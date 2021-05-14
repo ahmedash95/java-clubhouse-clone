@@ -47,9 +47,10 @@ public class AuthenticationController {
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+        final UserEntity userEntity = userService.getByEmailOrUserName(userDetails.getUsername());
         final String jwt = new JWTUtil().generateToken(userDetails);
 
-        AuthenticationResponse response = new AuthenticationResponse(jwt);
+        AuthenticationResponse response = new AuthenticationResponse(jwt, userEntity);
 
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }

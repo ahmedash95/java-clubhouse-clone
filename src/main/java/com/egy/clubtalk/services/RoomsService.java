@@ -12,7 +12,9 @@ import com.egy.clubtalk.exceptions.rooms.UserAlreadyInvitedToRoomException;
 import com.egy.clubtalk.exceptions.user.UserNotFoundException;
 import com.egy.clubtalk.repository.RoomRepository;
 import com.egy.clubtalk.repository.UserRepository;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,5 +73,11 @@ public class RoomsService {
         }
 
         return new RoomEntity().fromDAO(room.get());
+    }
+
+    public List<RoomEntity> getRoomsByOwner(UserEntity user) {
+        List<RoomDAO> rooms = roomRepository.findByOwnerID(user.getId());
+
+        return rooms.stream().map((r) -> new RoomEntity().fromDAO(r)).collect(Collectors.toList());
     }
 }
