@@ -135,4 +135,14 @@ public class UserService {
 
         return user.get().getFollowing().stream().map((u) -> new UserEntity().fromUserDao(u)).collect(Collectors.toList());
     }
+
+    public UserEntity getbyUserName(String username) {
+        Optional<UserDAO> user = userRepository.findByUsername(username);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        return new UserEntity().fromUserDao(user.get());
+    }
 }

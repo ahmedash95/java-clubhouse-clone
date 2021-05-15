@@ -5,6 +5,7 @@ import com.egy.clubtalk.entity.UserEntity;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "users")
@@ -32,6 +33,13 @@ public class UserDAO {
 
     @ManyToMany(mappedBy = "following")
     private Set<UserDAO> followers;
+
+
+    @Formula("(SELECT count(*) FROM user_following WHERE user_following.following_id= id)")
+    private Long followersCount;
+
+    @Formula("(SELECT count(*) FROM user_following WHERE user_following.user_id= id)")
+    private Long followingsCount;
 
     @OneToMany(
         mappedBy = "owner",
@@ -154,5 +162,13 @@ public class UserDAO {
         this.setFirstName(profileEntity.getFirstName());
         this.setLastName(profileEntity.getLastName());
         this.setBio(profileEntity.getBio());
+    }
+
+    public Long getFollowersCount() {
+        return followersCount;
+    }
+
+    public Long getFollowingsCount() {
+        return followingsCount;
     }
 }

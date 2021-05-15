@@ -15,9 +15,10 @@ public class UsersController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Object> show(@PathVariable("userId") Long userId) {
-        UserEntity userEntity = userService.getById(userId);
+    @GetMapping("/{username}")
+    public ResponseEntity<Object> show(@PathVariable("username") String username) {
+        username = username.replace("@","");
+        UserEntity userEntity = userService.getbyUserName(username);
 
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }

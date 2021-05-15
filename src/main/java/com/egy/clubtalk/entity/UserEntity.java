@@ -20,6 +20,9 @@ public class UserEntity extends ProfileEntity {
     @Size(min = 6, max = 15, message = "Password should be at least 6 characters.")
     private String password;
 
+    private Long followersCount;
+    private Long followingCount;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +55,22 @@ public class UserEntity extends ProfileEntity {
         this.password = password;
     }
 
+    public void setFollowersCount(Long followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public Long getFollowersCount() {
+        return followersCount;
+    }
+
+    public Long getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(Long followingCount) {
+        this.followingCount = followingCount;
+    }
+
     public UserEntity fromUserDao(UserDAO user) {
         UserEntity self = new UserEntity();
         self.setUsername(user.getUsername());
@@ -61,6 +80,9 @@ public class UserEntity extends ProfileEntity {
         self.setId(user.getID());
         self.setBio(user.getBio());
         self.setPicture(user.getPicture());
+        self.setFollowersCount(user.getFollowersCount());
+        self.setFollowingCount(user.getFollowingsCount());
+
 
         return self;
     }
