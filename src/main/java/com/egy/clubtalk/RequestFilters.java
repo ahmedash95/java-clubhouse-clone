@@ -14,7 +14,7 @@ public class RequestFilters {
     RedisRateLimiterFactory factory;
 
     @Bean
-    public FilterRegistrationBean<RoomsCreateFilter> loggingFilter(){
+    public FilterRegistrationBean<RoomsCreateFilter> getRoomsCreateEndpointFilter(){
         FilterRegistrationBean<RoomsCreateFilter> registrationBean  = new FilterRegistrationBean<>();
 
         registrationBean.setFilter(new RoomsCreateFilter(factory));
